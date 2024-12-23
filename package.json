@@ -68,7 +68,8 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^1.11.1",
+    "unzipper": "^0.12.3"
   },
   "devDependencies": {
     "@github/local-action": "^2.2.1",
