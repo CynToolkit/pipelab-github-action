@@ -39,7 +39,10 @@ export async function run(): Promise<void> {
     console.log(`Current Arch: ${currentArch}`)
     console.log(`Current Platform: ${currentPlatform}`)
 
-    const downloadFile = async (url: string, fileName: string): Promise<void> => {
+    const downloadFile = async (
+      url: string,
+      fileName: string
+    ): Promise<void> => {
       console.log(`Downloading file from ${url} to ${fileName}`)
       const res = await fetch(url)
       if (!res.body) {
@@ -63,7 +66,10 @@ export async function run(): Promise<void> {
       }
     }
 
-    const extractZip = async (filePath: string, extractTo: string): Promise<void> => {
+    const extractZip = async (
+      filePath: string,
+      extractTo: string
+    ): Promise<void> => {
       console.log(`Extracting zip file from ${filePath} to ${extractTo}`)
       await pipeline(
         createReadStream(filePath),
