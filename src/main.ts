@@ -11,7 +11,7 @@ import { createWriteStream } from 'fs'
 import { pipeline } from 'stream'
 import { promisify } from 'util'
 import unzipper from 'unzipper'
-import execa from 'execa'
+import { execa, ExecaError } from 'execa'
 
 export async function run(): Promise<void> {
   try {
@@ -53,8 +53,16 @@ export async function run(): Promise<void> {
       }
       const destination = path.resolve('./downloads', fileName)
       const fileStream = fs.createWriteStream(destination, { flags: 'wx' })
-      await finished(Readable.fromWeb(res.body).pipe(fileStream))
-      console.log(`Downloaded file to ${destination}`)
+      try {
+        await finished(Readable.from(res.body).pipe(fileStream))
+        console.log(`Downloaded file to ${destination}`)
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'EEXIST') {
+          console.log(`File ${destination} already exists, skipping download`)
+        } else {
+          throw error
+        }
+      }
     }
 
     const extractZip = async (filePath: string, extractTo: string) => {
@@ -94,8 +102,18 @@ export async function run(): Promise<void> {
         const { stdout } = await execa('./downloads/pipelab', args)
         console.log(stdout)
       } catch (error) {
-        console.error(error.stderr)
-        core.setFailed(error.stderr)
+        if (error instanceof ExecaError) {
+          if (error.stderr) {
+            console.error(error.stderr)
+            core.setFailed(error.stderr)
+          } else {
+            console.error(error)
+            core.setFailed('An unknown error occurred')
+          }
+        } else {
+          console.error(error)
+          core.setFailed('An unknown error occurred')
+        }
       }
     } else {
       core.setFailed('You are using an unsupported platform')
