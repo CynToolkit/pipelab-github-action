@@ -27,6 +27,9 @@ jobs:
         with:
           node-version-file: .node-version
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
+
       - name: Install Dependencies
         id: pnpm-install
         run: pnpm install
