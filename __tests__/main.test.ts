@@ -13,25 +13,21 @@ import { describe, it, beforeEach, expect, vi } from 'vitest'
 // Mock the action's main function
 const runMock = vi.spyOn(main, 'run')
 
-// Other utilities
-const timeRegex = /^\d{2}:\d{2}:\d{2}/
-
 // Mock the GitHub Actions core library
 let debugMock: ReturnType<typeof vi.spyOn>
 let errorMock: ReturnType<typeof vi.spyOn>
 let getInputMock: ReturnType<typeof vi.spyOn>
 let setFailedMock: ReturnType<typeof vi.spyOn>
-let setOutputMock: ReturnType<typeof vi.spyOn>
 
 describe('action', () => {
   beforeEach(() => {
     vi.clearAllMocks()
 
-    debugMock = vi.spyOn(core, 'debug').mockImplementation()
-    errorMock = vi.spyOn(core, 'error').mockImplementation()
-    getInputMock = vi.spyOn(core, 'getInput').mockImplementation()
-    setFailedMock = vi.spyOn(core, 'setFailed').mockImplementation()
-    setOutputMock = vi.spyOn(core, 'setOutput').mockImplementation()
+    debugMock = vi.spyOn(core, 'debug').mockImplementation(vi.fn())
+    errorMock = vi.spyOn(core, 'error').mockImplementation(vi.fn())
+    // @ts-expect-error
+    getInputMock = vi.spyOn(core, 'getInput').mockImplementation(vi.fn())
+    setFailedMock = vi.spyOn(core, 'setFailed').mockImplementation(vi.fn())
   })
 
   it('sets a failed status for unsupported platform', async () => {

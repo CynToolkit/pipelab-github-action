@@ -15,7 +15,7 @@ export async function run(): Promise<void> {
   try {
     const action = core.getInput('action')
     const project = core.getInput('project')
-    let pipelabVersion = core.getInput('pipelab-version')
+    let pipelabVersion: string | undefined = core.getInput('pipelab-version')
 
     console.log(`Action: ${action}`)
     console.log(`Project: ${project}`)
@@ -28,7 +28,7 @@ export async function run(): Promise<void> {
       const res = await fetch(
         'https://api.github.com/repos/CynToolkit/pipelab/releases/latest'
       )
-      const latestRelease = await res.json()
+      const latestRelease: { tag_name: string } = await res.json()
       pipelabVersion = latestRelease.tag_name.replace('v', '')
       console.log(`Latest Pipelab Version: ${pipelabVersion}`)
     }
@@ -39,7 +39,7 @@ export async function run(): Promise<void> {
     console.log(`Current Arch: ${currentArch}`)
     console.log(`Current Platform: ${currentPlatform}`)
 
-    const downloadFile = async (url: string, fileName: string) => {
+    const downloadFile = async (url: string, fileName: string): Promise<void> => {
       console.log(`Downloading file from ${url} to ${fileName}`)
       const res = await fetch(url)
       if (!res.body) {
@@ -63,7 +63,7 @@ export async function run(): Promise<void> {
       }
     }
 
-    const extractZip = async (filePath: string, extractTo: string) => {
+    const extractZip = async (filePath: string, extractTo: string): Promise<void> => {
       console.log(`Extracting zip file from ${filePath} to ${extractTo}`)
       await pipeline(
         createReadStream(filePath),
