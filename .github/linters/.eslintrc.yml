@@ -24,13 +24,11 @@ parserOptions:
     - './tsconfig.json'
 
 plugins:
-  - jest
   - '@typescript-eslint'
 
 extends:
   - eslint:recommended
   - plugin:@typescript-eslint/recommended-type-checked
-  - plugin:jest/recommended
 
 rules:
   {
