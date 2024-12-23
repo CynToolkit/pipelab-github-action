@@ -50639,10 +50639,20 @@ async function run() {
                 console.log('Creating downloads directory...');
                 await (0,promises_namespaceObject.mkdir)('downloads');
             }
-            const destination = external_path_default().resolve('./downloads', fileName);
+            const destination = __nccwpck_require__.ab + "downloads/" + fileName;
             const fileStream = external_fs_default().createWriteStream(destination, { flags: 'wx' });
-            await (0,external_stream_promises_namespaceObject.finished)(external_stream_.Readable.from(res.body).pipe(fileStream));
-            console.log(`Downloaded file to ${destination}`);
+            try {
+                await (0,external_stream_promises_namespaceObject.finished)(external_stream_.Readable.from(res.body).pipe(fileStream));
+                console.log(`Downloaded file to ${destination}`);
+            }
+            catch (error) {
+                if (error.code === 'EEXIST') {
+                    console.log(`File ${destination} already exists, skipping download`);
+                }
+                else {
+                    throw error;
+                }
+            }
         };
         const extractZip = async (filePath, extractTo) => {
             console.log(`Extracting zip file from ${filePath} to ${extractTo}`);

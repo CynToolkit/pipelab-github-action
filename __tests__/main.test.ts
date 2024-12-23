@@ -34,7 +34,6 @@ describe('action', () => {
     setOutputMock = vi.spyOn(core, 'setOutput').mockImplementation()
   })
 
-
   it('sets a failed status for unsupported platform', async () => {
     // Set the action's inputs as return values from core.getInput()
     getInputMock.mockImplementation(name => {
@@ -54,7 +53,9 @@ describe('action', () => {
     expect(runMock).toHaveReturned()
 
     // Verify that the core.setFailed function was called correctly
-    expect(setFailedMock).toHaveBeenCalledWith('You are using an unsupported platform')
+    expect(setFailedMock).toHaveBeenCalledWith(
+      'You are using an unsupported platform'
+    )
     expect(errorMock).not.toHaveBeenCalled()
   })
 })
