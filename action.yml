@@ -1,24 +1,20 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-
-# Add your action's branding here. This will appear on the GitHub Marketplace.
-branding:
-  icon: 'heart'
-  color: 'red'
-
-# Define your inputs here.
+name: 'Pipelab'
+description: 'Run Pipelab projects'
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  action:
+    description: 'What action to run' # run | validate
     required: true
-    default: '1000'
-
-# Define your outputs here.
+  project:
+    description: 'The path to a project file'
+    required: true
+  pipelab-version:
+    description: 'The version of Pipelab to use'
+    required: true
 outputs:
-  time:
-    description: 'Your output description here'
-
+  code:
+    description: 'The exit code returned by the app'
+  error:
+    description: 'The exit error returned by the app'
 runs:
-  using: node20
-  main: dist/index.js
+  using: 'node20'
+  main: 'dist/index.js'

@@ -1,6 +1,6 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
+  "name": "@pipelab/github-action",
+  "description": "Pipelab Github action",
   "version": "0.0.0",
   "author": "",
   "private": true,
@@ -20,8 +20,9 @@
   "exports": {
     ".": "./dist/index.js"
   },
+  "packageManager": "pnpm@9.15.0",
   "engines": {
-    "node": ">=21"
+    "node": ">=20"
   },
   "scripts": {
     "bundle": "npm run format:write && npm run package",
