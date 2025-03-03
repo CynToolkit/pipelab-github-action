@@ -41,7 +41,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@types/unzipper": "^0.10.10",
+    "@types/unzipper": "^0.10.11",
     "execa": "^9.5.2",
     "unzipper": "^0.12.3"
   },
